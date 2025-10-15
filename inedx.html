@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>С Днём Рождения</title>
+  <meta name="description" content="Поздравительная страница" />
+  <style>
+    :root{
+      --bg:#0b0e1a;
+      --ink:#e7e9ff;
+      --muted:#aab0d9;
+      --rose:#ff6fb1;
+      --sky:#7abaff;
+      --card:#12172b;
+      --card-2:#0f1426;
+      --ring: rgba(122,186,255,.5);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--ink);
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,111,177,.12), transparent 60%),
+                  radial-gradient(1000px 700px at 90% 15%, rgba(122,186,255,.10), transparent 55%),
+                  linear-gradient(180deg, #090b16 0%, #0b0e1a 30%, #0a0d1a 100%);
+      overflow-x:hidden;
+    }
+
+    .stars, .stars2, .stars3{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-repeat:repeat; background-position:0 0;
+      animation: drift 140s linear infinite;
+    }
+    .stars{ background-image: radial-gradient(1px 1px at 20% 30%, #a2d0ff 60%, transparent 61%),
+                                radial-gradient(1px 1px at 70% 60%, #ff98c9 60%, transparent 61%),
+                                radial-gradient(1px 1px at 40% 80%, #a2d0ff 60%, transparent 61%),
+                                radial-gradient(1px 1px at 85% 25%, #ff98c9 60%, transparent 61%);
+    }
+    .stars2{ opacity:.7; filter: blur(.3px); animation-duration: 200s; }
+    .stars3{ opacity:.35; filter: blur(1px); animation-duration: 280s; }
+    @keyframes drift{ from{ background-position:0 0 } to{ background-position:-2000px 2000px } }
+
+    .wrap{ position:relative; z-index:1; max-width:980px; margin:0 auto; padding:64px 20px 120px; }
+
+    h1{
+      font-weight:800; font-size: clamp(38px, 6vw, 72px); line-height:1.05; margin:18px 0 10px;
+      letter-spacing:.4px; text-align:center;
+      background: linear-gradient(180deg, #fff 0%, #d6e4ff 45%, #adc8ff 60%, #ffb3d7 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 0 24px rgba(122,186,255,.25);
+    }
+
+    .panel{
+      background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px; padding:28px; box-shadow: var(--shadow);
+    }
+
+    .lyrics{ text-align:center; font-size:clamp(16px,2.3vw,20px); color:#d7defa; white-space:pre-line; }
+
+    .divider{ height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); margin:28px 0; border:0; }
+
+    .greeting{ font-size: clamp(18px,2.8vw,22px); color:#f1f3ff; text-align:center; line-height:1.6; }
+
+    .big-love{
+      text-align:center; font-weight:900; letter-spacing:.6px; margin:42px 0 18px;
+      font-size: clamp(34px, 6vw, 64px);
+      background: linear-gradient(180deg, #fff 0%, #ffd6ec 60%, #ff8fc7 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 0 30px rgba(255,143,199,.25);
+    }
+
+    .codes{
+      display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:18px;
+    }
+    @media (max-width:800px){ .codes{ grid-template-columns:1fr } }
+
+    .code-card{
+      position:relative; padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(170deg, rgba(122,186,255,.10), rgba(255,111,177,.06));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .code-head{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+    .logo{
+      width:44px; height:44px; border-radius:12px; background:#0b1022; flex:0 0 44px;
+      border:1px dashed rgba(255,255,255,.18);
+      display:grid; place-items:center; color:#7aa2ff; font-weight:700;
+    }
+    .code-title{ font-weight:800; font-size:18px; }
+    .code-sub{ color:var(--muted); font-size:14px; }
+
+    .code-secret{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(0,0,0,.35); border:1px dashed rgba(255,255,255,.16);
+      padding:14px; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+
+    .blurred{ filter: blur(10px); opacity:.85; user-select:none; }
+
+    /* Доступность */
+    .btn:focus-visible, .code-card:focus-within{ outline:2px solid var(--ring); outline-offset:3px; border-radius:16px; }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.14); background:transparent; color:var(--ink);
+      padding:12px 16px; border-radius:14px; font-weight:600; cursor:pointer;
+      transition: transform .12s ease, border-color .2s ease, background .2s ease;
+      backdrop-filter: blur(6px);
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: var(--ring); background: rgba(122,186,255,.08); }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <main class="wrap">
+    <h1>С Днём Рождения</h1>
+
+    <section class="panel" aria-labelledby="lyrics-title">
+      <h2 id="lyrics-title" class="visually-hidden">Строки песни</h2>
+      <div class="lyrics">While the others talked
+We were listenin' to Lover's Rock
+In her bedroom
+In her bedroom</div>
+
+      <hr class="divider" />
+
+      <div class="greeting" id="greeting-text">
+        Мне хочется всегда слушать твой тёплый голос, ты тот самый трек, который всегда хочется слушать. Я никогда не отпущу твои тёплые и нежные руки. Для меня ты очень близкий человек, я рад, что ты всё ещё со мной.
+      </div>
+    </section>
+
+    <div class="big-love">я тебя очень люблю ❤</div>
+
+    <section class="panel" aria-labelledby="codes-title">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px;">
+        <h2 id="codes-title" style="margin:0; font-size:20px;">Подарочные коды</h2>
+      </div>
+
+      <div class="codes">
+        <!-- ROBLOX -->
+        <article class="code-card" data-card data-message="Напиши мне — пришлю код лично 💌">
+          <div class="code-head">
+            <div class="logo">
+              <img src="img/roblox.png" alt="Roblox" width="44" height="44" style="border-radius:12px;">
+            </div>
+            <div>
+              <div class="code-title">Roblox</div>
+              <div class="code-sub">подарок-сюрприз</div>
+            </div>
+          </div>
+          <div class="code-secret">
+            <span class="blurred" data-blur>XXXX-XXXX-XXXX</span>
+            <button class="btn" data-toggle>Показать</button>
+          </div>
+        </article>
+
+        <!-- STEAM -->
+        <article class="code-card" data-card data-message="Напиши мне — пришлю код лично 🎁">
+          <div class="code-head">
+            <div class="logo">
+              <img src="img/steam.png" alt="Steam" width="44" height="44" style="border-radius:12px;">
+            </div>
+
+            <div>
+              <div class="code-title">Steam</div>
+              <div class="code-sub">игра-сюрприз</div>
+            </div>
+          </div>
+          <div class="code-secret">
+            <span class="blurred" data-blur>XXXX-XXXX-XXXX</span>
+            <button class="btn" data-toggle>Показать</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Без подсказок: по клику текст заменяется на «Напиши мне…», код не хранится в HTML
+    document.querySelectorAll('[data-card]').forEach(card =>{
+      const btn = card.querySelector('[data-toggle]');
+      const blur = card.querySelector('[data-blur]');
+      const msg = card.getAttribute('data-message') || 'Напиши мне — пришлю код лично';
+      btn.addEventListener('click', ()=>{
+        blur.textContent = msg;
+        blur.style.filter = 'none';
+        blur.style.opacity = '1';
+        btn.setAttribute('disabled','true');
+        btn.textContent = 'Жду твоё сообщение';
+      });
+    });
+  </script>
+</body>
+</html>
